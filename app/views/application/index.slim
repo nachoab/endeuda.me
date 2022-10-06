@@ -1,0 +1,200 @@
+.wrap ng-app="app" ng-controller="baseController" ng-cloak=""
+
+  header#st-navbar-header
+    #st-brand Esplit
+    ul#st-navbar-right
+      li
+        button.btn.btn-primary ng-click="newMovement()"
+          span.glyphicon.glyphicon-plus-sign
+          | Add movement
+      li.dropdown
+        user-avatar#st-navbar-avatar.dropdown-toggle user="currentUser" ng-if="currentUser.userId"
+        ul.dropdown-menu.pull-right
+          li
+            a href="/users/sign_out" Sign out
+
+  section
+    .col-md-4#st-col-mydebts
+        header
+          nav.pull-left
+            .st-header-title.pull-left ng-click="movementFilter.group=null;movementFilter.userId=null" ng-class="{'st-header-title-off': movementFilter.group}" My debts
+            .st-header-title.pull-left.sidebar-header-animation ng-if="movementFilter.group" ng-class="{'st-header-title-group': movementFilter.group}"
+              | {{ movementFilter.group.name }}
+          
+          .btn-group.pull-right.sidebar-header-animation ng-if="!movementFilter.group"
+            button.btn.btn-sm.st-btn-transparent ng-click="newContact()" New contact
+            button.btn.btn-sm.st-btn-transparent ng-click="newGroup()" New group
+
+          .btn-group.pull-right.sidebar-header-animation ng-if="movementFilter.group"
+            .btn.btn-sm.st-btn-transparent ng-click="addMemberToGroup(movementFilter.group)" 
+              /glyphicon.glyphicon-pencil
+              | Edit group
+
+
+        #st-debts.sidebar-animation ng-if="!movementFilter.group"
+          / .st-my-total-debt 
+          /   | {{getMyTotalDebt()}} € in total
+
+          ol#st-debts-list
+            li.st-empty-debt-list ng-if="debtList && !debtList.length" ng-click="newContact()" Start adding some friends!
+            li.moving-top-animation[ng-repeat="contact in debtList | orderBy:'-updatedAt'"
+                                    ng-class="{selected: movementFilter.userId && movementFilter.userId == contact.userId}"
+                                    ng-click="selectContact(contact)"]
+
+              // Group
+              .group ng-if="!contact.email" ng-click="movementFilter.group=contact;movementFilter.userId=null"
+                .st-thumb.st-thumb-group.pull-left
+                  = image_tag "app/group.svg"
+                .st-info
+                  .st-name
+                    | {{contact.name}}
+                  .st-date
+                    | {{contact.updatedAt | date: 'd MMM HH:mm' | uppercase}}
+
+                .st-debt-status ng-if="getGroupDebt(contact, movements)>0"
+                  .st-who-owns YOU ARE OWED
+                  .st-amount.st-positive
+                    | {{getGroupDebt(contact, movements, true)}} €
+
+                .st-debt-status ng-if="getGroupDebt(contact, movements)<=0"
+                  .st-who-owns YOU OWE
+                  .st-amount.st-negative
+                    | {{getGroupDebt(contact, movements, true)}} €
+
+              // User
+              .contact ng-if="contact.email"
+                user-avatar.st-thumb.pull-left user="contact"
+                .st-info
+                  .st-name 
+                    | {{getUserName(contact.userId)}}
+                  .st-date 
+                    .text.pull-left
+                      | {{contact.updatedAt | date: 'd MMM HH:mm' | uppercase}}
+
+                .st-debt-status.pull-right ng-if="getUserDebtWithMe(contact, movements) > 0"
+                  .st-who-owns YOU OWE HIM
+                  .st-amount.st-negative
+                    | {{getUserDebtWithMe(contact, movements, true)}} €
+
+                .st-debt-status.pull-right ng-if="getUserDebtWithMe(contact, movements) <= 0"
+                  .st-who-owns HE OWES YOU
+                  .st-amount.st-positive
+                    | {{getUserDebtWithMe(contact, movements, true)}} €
+
+
+        // Opened Group Sidebar
+        #st-group.sidebar-animation ng-if="movementFilter.group"
+          ol#st-group-list
+            li.moving-top-animation ng-repeat="member in movementFilter.group.users | orderBy:'name'" ng-class="{selected: movementFilter.userId && movementFilter.userId == member.userId}" ng-click="selectContact(member)"
+              user-avatar.st-thumb.pull-left user="member"
+              .st-info
+                .st-name 
+                  | {{ member.name }}
+              .st-group-status.pull-right
+                .st-who-owns BALANCE
+                .st-amount ng-class="{ 'st-positive': getUserBalanceInGroup(member, movementFilter.group, movements) >= 0, 'st-negative': getUserBalanceInGroup(member, movementFilter.group, movements) < 0 }"
+                  | {{ getUserBalanceInGroup(member, movementFilter.group, movements) }} €
+
+              .st-group-status.pull-right
+                .st-who-owns TOTAL EXPENSE
+                .st-amount
+                  | {{ getUserExpenseInGroup(member, movementFilter.group, movements) }} €
+            li.st-group-total-expense ng-if="movementFilter.group" TOTAL EXPENSE IN {{movementFilter.group.name}}: {{getGroupTotalExpenses(movementFilter.group)}} €
+
+
+    .col-md-8#st-col-movements
+      // Filter
+      .st-movements-filter
+        .st-filter-info
+          span< ng-if="movementFilter.group"
+            | In {{movementFilter.group.name}}:
+          span<
+            | {{movementFilter.typeName}}
+          span< ng-hide="getUserName(movementFilter.userId)"
+            | {{movementFilter.type=='all' ? 'with' : 'by'}} everyone
+          span< ng-show="getUserName(movementFilter.userId)"
+            | {{movementFilter.type=='all' ? 'with' : 'by'}} {{getUserName(movementFilter.userId)}}
+
+        .dropdown
+          button.btn.st-btn-transparent.btn-sm.dropdown-toggle
+            span.glyphicon.glyphicon-filter
+          ul.dropdown-menu.pull-right stop-event='click'
+            li
+              form
+                .form-group
+                  select.form-control.input-sm[ng-model="movementFilter.type"
+                                               ng-options="type.value as type.typeName for type in movementsTypes"
+                                               ng-change="movementFilter.updateTypeName()"]
+
+                .form-group
+                  label By: 
+                  select.form-control.input-sm[ng-model="movementFilter.userId"
+                                               ng-options="person.userId as getUserName(person.userId) for person in people"]
+                    option value="" Everyone
+
+              button.btn.btn-default.btn-sm ng-click="closeDropdown()" Close
+
+      // Movements list
+      ol#st-movements-months-blocks
+        li ng-repeat="date in getMonthsInMovements(movements)"
+          h3
+            | {{date | date:'MMMM y' | uppercase }}
+          ol.st-movements-list ng-if="currentUser.userId"
+            li.row[class="movement-type-{{movement.type}}"
+                                        ng-class="{'movement-from-group': movement.groupId}"
+                                        ng-repeat="movement in movements | sameMonth:date | filterMovements:movementFilter | orderBy:'-createdAt'" ]
+              // User avatar and money
+              .col-lg-2.col-xs-2.st-user-movement
+                user-avatar.st-thumb user="getPayer(movement)" tooltip="{{getPayer(movement).name}}"
+                .st-money
+                  .st-title-sm ng-if="movement.type=='expense'" PAYS
+                  .st-title-sm ng-if="movement.type=='transfer'" RETURNS
+                  .st-amount 
+                    | {{movement.amount}} €
+
+              // Movement title
+              .st-description ng-class="{'col-lg-5': movement.groupId, 'col-xs-4': movement.groupId, 'col-lg-7': !movement.groupId, 'col-xs-6': !movement.groupId}"
+                .st-title
+                  | {{movement.title}}
+                .st-title-sm
+                  | {{movement.createdAt | date:'d MMM' | uppercase}}
+
+              // Group
+              .col-lg-2.col-xs-2.st-in-group ng-if="movement.groupId"
+                .st-title-sm GROUP
+                .st-group
+                  | {{ getGroup(movement.groupId).name }}
+
+              // Shared/Recieved by
+              .col-lg-3.col-xs-4.st-shared-by ng-if="movement.type == 'expense'"
+                .st-title-sm SHARED BY
+                ul.st-shared-by-thumbs
+                  li ng-repeat="shareholder in movement.shareholders | filter:{isReceiver:true}"
+                    user-avatar.st-thumb-sm user="shareholder" tooltip="{{shareholder.name}}"
+
+              .col-lg-3.col-xs-4.st-shared-by ng-if="movement.type == 'transfer'"
+                .st-title-sm RECEIVED BY
+                ul.st-shared-by-thumbs
+                  li ng-repeat="shareholder in movement.shareholders | filter:{isReceiver:true}" ng-if="shareholder.userId != getPayer(movement).userId"
+                    user-avatar.st-thumb-sm user="shareholder" tooltip="{{shareholder.name}}"
+
+              .st-movement-controls
+                .st-destroy.glyphicon.glyphicon-trash confirm="Delete movement?" ng-click="destroy(movement)" 
+
+      // No records messages
+      .st-no-movements-msg ng-if="movements && (movements | filterMovements:movementFilter).length == 0"
+        div ng-if="movementFilter.userId && movementFilter.type == 'isShareholder'"
+          | {{ getUserName(movementFilter.userId) }} no ha disfrutado de ningún gasto
+          span ng-if="movementFilter.userId != currentUser.userId"  contigo
+        div ng-if="movementFilter.userId && movementFilter.type == 'isPayer'"
+          | {{ getUserName(movementFilter.userId) }} no ha hecho ningún pago
+        div ng-if="movementFilter.userId && movementFilter.type == 'isReceiver'"
+          | {{ getUserName(movementFilter.userId) }} no ha recibido ninguna transferencia
+        div ng-if="movementFilter.userId && movementFilter.type == 'isTransferer'"
+          | {{ getUserName(movementFilter.userId) }} no ha realizado ninguna transferencia
+        div ng-if="!movementFilter.userId && movementFilter.type == 'all' && !movementFilter.group"
+          | Aún no hay ningún movimiento
+        div ng-if="!movementFilter.userId && movementFilter.type == 'all' && movementFilter.group"
+          | Aún no se ha añadido ningún movimiento al grupo {{movementFilter.group.name}}
+        div ng-if="movementFilter.userId && movementFilter.type == 'all'"
+          | {{ getUserName(movementFilter.userId) }} no ha realizado ningún movimiento

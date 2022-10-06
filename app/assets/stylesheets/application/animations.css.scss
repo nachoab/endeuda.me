@@ -1,0 +1,180 @@
+/**
+ * Simple opacity animation.
+ */
+.opacity-animation.ng-enter {
+  -webkit-transition: 0.30s ease all;
+  transition: 0.30s ease all;
+  opacity:0;
+}
+.opacity-animation.ng-enter-stagger {
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.opacity-animation.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+
+/**
+ * Change between states in the new movement form.
+ */
+.new-movement-states-animation.ng-enter {
+  -webkit-transition: 0.20s ease all;
+  transition: 0.20s ease all;
+  opacity: 0 !important;
+  margin-left: 20% !important;
+}
+.new-movement-states-animation.ng-enter-stagger {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.new-movement-states-animation.ng-enter.ng-enter-active {
+  opacity: 1 !important;
+  margin-left: 0 !important;
+}
+
+
+/**
+ * Drop from top animation.
+ */
+.moving-top-animation.ng-enter {
+  -webkit-transition: 0.30s ease all;
+  transition: 0.30s ease all;
+  opacity: 0 !important;
+  margin-top: -20px !important;
+}
+.moving-top-animation.ng-enter-stagger {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.moving-top-animation.ng-enter.ng-enter-active {
+  opacity: 1 !important;
+  margin-top: 0 !important;
+}
+
+
+/**
+ * States breadcrumb animation.
+ */
+.breadcrumb-animation.ng-enter {
+  -webkit-transition: 0.30s ease all;
+  transition: 0.30s ease all;
+  opacity: 0 !important;
+  margin-left: -20px !important;
+}
+.breadcrumb-animation.ng-enter-stagger {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.breadcrumb-animation.ng-enter.ng-enter-active {
+  opacity: 1 !important;
+  margin-left: 0 !important;
+}
+
+
+/**
+ * Remove animation.
+ */
+.remove {
+  transition: margin 0.3s ease !important;
+  margin-left: -10px !important;
+  opacity: 0 !important;
+}
+
+
+/**
+ * Drop from top animation.
+ */
+.moving-top-animation-el.ng-enter {
+  -webkit-transition: 0.30s ease all;
+  transition: 0.30s ease all;
+  opacity: 0 !important;
+  margin-top: -20px !important;
+}
+.moving-top-animation-el.ng-enter-stagger {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.moving-top-animation-el.ng-enter.ng-enter-active {
+  opacity: 1 !important;
+  margin-top: 0 !important;
+}
+
+.moving-top-animation-el.ng-leave {
+  -webkit-transition: 0.30s ease all;
+  transition: 0.30s ease all;
+  opacity: 0 !important;
+  margin-top: 1 !important;
+}
+.moving-top-animation-el.ng-leave-stagger {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.moving-top-animation-el.ng-leave.ng-leave-active {
+  opacity: 0 !important;
+  margin-top: -20px !important;
+}
+
+
+
+/**
+ * Drop from top animation.
+ */
+.sidebar-animation.ng-enter {
+  -webkit-transition: 0.25s ease all;
+  transition: 0.25s ease all;
+  opacity: 0 !important;
+  margin-left: 300px !important;
+}
+.sidebar-animation.ng-enter.ng-enter-active {
+  opacity: 1 !important;
+  margin-left: 0 !important;
+}
+
+// .sidebar-animation.ng-leave {
+//   -webkit-transition: 0.25s ease all;
+//   transition: 0.25s ease all;
+//   opacity: 0.7 !important;
+//   margin-left: 0 !important;
+// }
+// .sidebar-animation.ng-leave.ng-leave-active {
+//   opacity: 0 !important;
+//   margin-left: -300px !important;
+// }
+
+
+
+
+
+
+
+.sidebar-header-animation.ng-enter {
+  -webkit-transition: 0.25s ease all;
+  transition: 0.25s ease all;
+  opacity: 0 !important;
+  margin-right: -30px !important;
+}
+.sidebar-header-animation.ng-enter.ng-enter-active {
+  opacity: 1 !important;
+  margin-right: 0 !important;
+}
+
+
+.modal {
+  &.fade {
+    transform: .3s cubic-bezier(.13,1.07,.5,1.01), visibility 0s;
+    -webkit-transform: .3s cubic-bezier(.13,1.07,.5,1.01), visibility 0s;
+    -webkit-transform: translateY(0);
+  }
+
+}

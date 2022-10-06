@@ -1,0 +1,38 @@
+header
+  .container
+    / nav 
+    /   - if user_signed_in? 
+    /     a.btn.btn-default href=destroy_user_session_path Desconectar
+    /   - else 
+    /     a.btn.btn-default href=new_user_registration_path Acceso
+    h1 Esplit
+
+  .container
+    / h1.row.slogan1 endeuda.me
+    .row.slogan2 Comparte gastos con amigos. Asegúrate de que todos cobréis siempre.
+    / .row 
+    /   a.btn.btn-primary.call-to-action href='/app' EMPEZAR
+
+section
+  .container
+    .row
+      .col-lg-4.col-md-3.col-sm-3.col-xs-1
+      .col-lg-4.col-md-6.col-sm-6.col-xs-10
+        h2.pull-left
+          | Acceso
+      
+        .social
+          - User.omniauth_providers.each do |provider|
+            = link_to "Accede con #{provider.to_s.titleize}", omniauth_authorize_path(:user, provider)
+      .col-lg-4.col-md-3.col-sm-3.col-xs-1
+
+
+footer
+  .container
+    .row 2013 endeuda.me
+
+
+
+    / = link_to "Registrame", new_user_registration_path
+    / - if user_signed_in? 
+    /   div = link_to "Logout", destroy_user_session_path

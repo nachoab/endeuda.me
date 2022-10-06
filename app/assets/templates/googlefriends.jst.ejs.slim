@@ -1,0 +1,32 @@
+script src="https://apis.google.com/js/client.js?onload=googleOnLoadCallback"
+div ng-controller="googleContactsController"
+  label Busca entre tus contactos de Google.
+
+  .loading ng-if="!googleContacts" Cargando ...
+
+  input.form-control type="text" ng-model="filter.text" placeholder="Busca entre tus amigos por nombre" ng-if="googleContacts"
+
+  ul.contact-list ng-if="googleContacts"
+    li.opacity-animation ng-repeat="contact in googleContacts | orderBy:'gd$email[0].address' | filter:userFilter | paged:(currentPage-1)*itemsPerPage:(currentPage)*itemsPerPage" ng-if="contact.gd$email[0].address" 
+      .name
+        span ng-if="contact.title.$t"
+          | {{ contact.title.$t }}, 
+        span ng-if="!contact.title.$t"
+          | {{ getNameFromMail(contact.gd$email[0].address) }},           
+        a ng-show="!confirmGoogleInvitation" ng-click="confirmGoogleInvitation=!confirmGoogleInvitation" Enviar petición
+
+      .email 
+        | {{ contact.gd$email[0].address }}
+
+      .confirm ng-show="confirmGoogleInvitation"
+        | ¿Invitarle a compartir gastos?
+        button.btn.btn-default ng-click="sendGoogleInvitation(contact)" Si, enviar
+        button.btn.btn-default ng-click="confirmGoogleInvitation=false" Cancelar
+
+  pagination.pagination-sm [total-items="(googleContacts | filter:userFilter).length"
+                            page="currentPage"
+                            max-size="5"
+                            items-per-page="itemsPerPage"
+                            on-select-page="selectPage(page)"
+                            boundary-links="true"
+                            ng-show="googleContacts"]

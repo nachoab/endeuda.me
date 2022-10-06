@@ -1,0 +1,72 @@
+#st-navbar-header {
+  background: white;
+  color: $brand-primary;
+
+  #st-brand {
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding-top: 12px;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  @media (max-width: $screen-md-max) {
+    #st-brand {
+      padding-left: 20px;
+      text-align: left;
+    }
+  }
+
+  #st-navbar-right {
+    margin-top: -55px;
+    height: 100%;
+    float: right;
+
+    >li {
+      display: inline-block;
+      vertical-align: top;
+      height: 100%;
+      .glyphicon {
+        color: white;
+      }
+    }
+
+    #st-navbar-avatar {
+      height: 55px;
+      width: 55px;
+      opacity: 0.9;
+      cursor: pointer;
+      font-size: 22px;
+
+      img {
+        height: 55px;
+        width: 55px;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .dropdown-menu {
+      margin-top: 0;
+      min-width: 180px;
+    }
+
+    .btn {
+      height: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 15px 20px;
+      vertical-align: top;
+
+      .glyphicon {
+        margin: 0 8px 0 0;
+        font-size: 19px;
+      }
+    }
+  }
+
+}

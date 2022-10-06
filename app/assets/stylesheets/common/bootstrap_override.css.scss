@@ -1,0 +1,56 @@
+/**
+ * Fonts
+ */
+$font-size-small: 13px;
+$text-title-color: #505050;
+
+/**
+ * Colors
+ */
+$brand-primary: #9660ac;
+
+/**
+ * Buttons
+ */
+$btn-font-weight: 600;
+$btn-default-bg: #d5d5d5;
+$btn-default-border: #d5d5d5;
+$btn-default-color: #505050;
+
+/**
+ * Fonts
+ */
+$font-family-base: "Lato", "Roboto", sans-serif;
+$text-color: #505050;
+$font-size-base: 15px;
+
+/**
+ * Components
+ */
+$border-radius-base: 0;
+$border-radius-small: 0;
+$border-radius-large: 0;
+
+/**
+ * Modal
+ */
+$modal-content-bg: white;
+$modal-backdrop-bg: white;
+$modal-header-border-color: #f2f2f2;
+$modal-footer-border-color: #f2f2f2;
+//$modal-lg: ;
+//$modal-md: ;
+//$modal-sm: ;
+
+
+/**
+ * Alerts
+ */
+$alert-danger-bg: #ec4753;
+$alert-danger-text: white;
+$alert-danger-border: #ec4753;
+
+/**
+ * Forms
+ */
+$input-border-focus: lighten($brand-primary, 8%);

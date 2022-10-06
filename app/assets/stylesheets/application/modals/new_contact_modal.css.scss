@@ -1,0 +1,29 @@
+#st-new-contact-modal {
+
+  .st-users-list {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .st-contacts-no-records {
+    padding-top: 20px;
+    text-align: center;
+    color: $gray-light;
+  }
+
+  .modal-footer {
+    margin-top: 0;
+  }
+
+  .st-new-email .st-user-thumb {
+    background: $bg-gray-darker;
+    text-align: center;
+    .glyphicon {
+      font-size: 18px;
+      color: #aaa;
+      padding-top: 10px;
+    }
+  }
+
+}

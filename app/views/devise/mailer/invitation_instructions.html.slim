@@ -1,0 +1,30 @@
+.wrapper style="width:100%; background:#F2F2F2; color:#343434; padding: 10px;"
+  .head style="width: 500px; border-radius:5px 5px 0 0; background:#9660AC; border:solid 1px #9660AC; padding: 10px 20px; text-align:center;"
+    a style="font-size:22px; color:#FFF; text-decoration:none;" href="http://endeuda.me" endeuda.me
+
+  .box style="width: 500px; border-radius:0 0 5px 5px; background:#FFF; border:solid 1px #CCC; padding: 20px; border-top:none;"
+    h1 style="font-weight:normal; font-size:30px; margin:0 0 20px 0;" Welcome to endeudame!
+
+    p 
+      span> Hello
+      strong = @resource.email 
+      span> !
+      p> 
+        span> = "#{@resource.invited_by.name}"
+        span> has invited you to use 
+        a href="http://endeuda.me" endeudame.
+
+    div style="font-size:18px; text-align:center;" = link_to 'Accept invitation!', accept_invitation_url(@resource, :invitation_token => @token), { :style => "border-radius:4px; background:#EEE; display:block; padding:7px 0; color:#9660AC; text-decoration:none;" }
+
+    p style="margin-bottom:20px;" If you don't want to accept this invitation, please ignore this email.
+
+    p style="margin:0" Track and manage your shared expenses: use it for your trips, with roommates, on your daily shared expenses... 
+    p style="margin:0" Sharing made easy, and make sure everyone gets paid back.
+
+    p style="margin-top:30px;" 
+      | Take it easy! 
+      span style="color:#BBB" 
+        | - The endeudame Team
+
+  div style="font-size:12px; padding: 5px 5px; color:#999" © 2014 Endeudame, all rights reserved.
+

@@ -1,0 +1,13 @@
+.wrapper style="width:100%; background:#F2F2F2; color:#343434; padding: 10px;"
+  .head style="width: 500px; border-radius:5px 5px 0 0; background:#9660AC; color:#FFF; border:solid 1px #9660AC; padding: 10px 20px; text-align:center; font-size:22px"
+    a style="font-size:22px; color:#FFF; text-decoration:none;" href="http://endeuda.me" endeuda.me
+
+  .box style="width: 500px; border-radius:0 0 5px 5px; background:#FFF; border:solid 1px #CCC; padding: 20px; border-top:none;"
+    strong> = @inviter.name 
+    span> has invited you to share expenses in the group
+    a> href="http://endeuda.me" = "#{@group.name}"
+    span> with
+    span = raw @group.user.collect { |user| "#{user.name}" }.join(", ")
+
+    a href="http://endeuda.me" style="display:block; margin-top: 20px; color:#9660AC;" endeuda.me
+  div style="font-size:12px; padding: 5px 5px; color:#999" © 2014 Endeudame, all rights reserved.

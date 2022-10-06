@@ -1,0 +1,123 @@
+#st-col-mydebts {
+  background: $bg-gray-darker;
+  padding: 0 0 25px 0;
+
+  @media (min-width: $screen-sm-min) {
+    padding: 0;
+  }
+
+  header {
+    display: table;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 25px 20px 0 20px;
+
+    @media (min-width: $screen-sm-min) {
+      margin: 25px 0 15px 0;
+      padding: 0 20px;
+    }
+  }
+
+  .st-header-title {
+    margin-right: 10px;
+    margin-top: 6px;
+    cursor: pointer;
+    display: inline;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &:hover {
+      text-decoration: none;
+      border-bottom: 2px solid $gray-light;
+    }
+  }
+
+  .st-header-title-off {
+    color: $gray-light;
+  }
+
+  .st-header-title-group {
+    margin-left: 10px;
+    border-bottom: 2px solid $brand-primary;
+    &:hover {
+      border-color: $brand-primary;
+    }
+  }
+
+}
+
+#st-debts-list li {
+  display: table;
+  width: 100%;
+  padding: 9px 20px;
+  border-bottom: solid 1px $bg-gray-dark;
+  border-top: solid 1px $bg-gray-dark;
+  margin-bottom: -1px;
+  cursor: pointer;
+
+  .st-thumb {
+    position: absolute;
+  }
+
+  .st-thumb-group {
+    padding: 5px 6px;
+    img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .st-info {
+    padding-left: 50px;
+    display: inline-block;
+    width: 80%;
+
+    .st-name {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .st-date {
+      color: #777;
+      font-size: 10px;
+    }
+  }
+
+  .st-debt-status {
+    width: 20%;
+    text-align: right;
+    display: inline-block;
+    vertical-align: top;
+
+    .st-who-owns {
+      color: #777;
+      font-size: 10px;
+    }
+
+    .st-amount {
+      font-size: 19px;
+      margin-top: -3px;
+    }
+
+    .st-positive {
+      color: #26af76;
+    }
+
+    .st-negative {
+      color: #ec4753;
+    }
+  }
+
+  &:hover {
+    background-color: lighten($bg-gray-dark, 2%); 
+  }
+
+  &.selected {
+    background: $bg-gray-dark;
+    &:hover {
+      background-color: $bg-gray-dark;
+    }
+  }
+
+}

@@ -1,0 +1,161 @@
+/**
+ * Main frame of the wellcome page.
+ */
+
+body {
+  // background: #dfe3e9;
+}
+
+html {
+  /** Si no sale la barra abajo cuando aparece el scroll vertical, no se pq. */
+  overflow-x: hidden;
+}
+
+header {
+  background: #fff;
+  padding: 40px 0;
+
+  h1 {
+    font-size: 49px;
+    text-align: center;
+    margin: 0;
+  }
+
+  nav {
+    float: right;
+    line-height: 16px;
+    position: relative;
+  }
+
+  .row {
+    text-align: center;
+  }
+
+  .slogan1 {
+    font-size: 49px;
+    text-align: center;
+    margin: 20px 0 0 0;
+  }
+
+  .slogan2 {
+    color: #9099a3;
+    font-size: 23px;
+    text-align: center;
+    font-weight: 300;
+    margin: 0 0 0px 0;
+  }
+}
+
+section {
+  background: #f4f4f4;
+  padding: 30px 0 40px;
+  text-align: center;
+
+  h2 {
+    margin: 0 0 10px 0;
+    width: 100%;
+  }
+
+  form {
+    text-align: center;
+    .form-control {
+      // width: 20%;
+      margin-bottom: 5px;
+    }
+
+    .checkbox {
+      text-align: left;
+      margin-right: 10px;
+      label {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .social {
+    display: table;
+    clear: both;
+    width: 100%;
+    margin: 10px 0;
+
+    a {
+      display: block;
+    }
+
+    .btn {
+      color: #FFF;
+      margin: 5px 0 5px 0;
+
+      &.btn-facebook {
+        background: #4264aa;
+        display: table;
+
+        .facebook-icon {
+          background-repeat: no-repeat;
+          background-position: top;
+          background-image: url(app/facebook.svg);
+          height: 33px;
+          margin: -10px 17px -10px -23px;
+          width: 33px;
+          display: inline-block;
+        }
+
+        &:hover {
+          background: darken(#4264aa, 10);
+        }
+      }
+
+      &.btn-twitter {
+        background: #55acee;
+        display: table;
+
+        .facebook-icon {
+          background-repeat: no-repeat;
+          background-position: top;
+          background-image: url(app/facebook.svg);
+          height: 33px;
+          margin: -10px 17px -10px -23px;
+          width: 33px;
+          display: inline-block;
+        }
+
+        &:hover {
+          background: darken(#55acee, 10);
+        }
+      }
+
+      &.btn-google,
+      &.btn-google_oauth2 {
+        background: #d53333;
+        border-color: #d53333;
+        display: table;
+        // width: 100%;
+        // text-align: left;
+
+        .google-icon {
+          background-color: #cc0000;
+          background-image: url("app/google.svg");
+          background-position: center top;
+          background-repeat: no-repeat;
+          display: inline-block;
+          height: 35px;
+          margin: -7px 10px -12px -12px;
+          width: 41px;
+        }
+
+        &:hover {
+          // background: darken(#d53333, 10);
+        }
+      }
+    }
+  }
+
+}
+
+footer {
+  text-align: center;
+  color: #a4aab4;
+  font-size: 16px;
+  padding: 30px 0;
+  font-weight: 300;
+}

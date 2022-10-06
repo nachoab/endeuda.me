@@ -1,0 +1,68 @@
+.modal-content#new-group-modal
+  .modal-header
+    h2.modal-title ng-if="!isEdit" New group
+    h2.modal-title ng-if="isEdit" Edit group
+
+  .modal-body.disable-select
+    form name="group.form" novalidate=""
+      alert.alert-danger.moving-top-animation-el[type="danger"
+                                                 ng-if="group.error == 'notenoughmembers'"
+                                                 close="group.error=''"]
+        | You need at least two people for your group
+
+      alert.alert-danger.moving-top-animation-el[type="danger"
+                                                 ng-if="group.error == 'groupname'"
+                                                 close="group.error=''"]
+        | Write a group name
+
+      .form-group
+        input.form-control[type="text"
+                           focus="{{!isEdit}}"
+                           ng-model="group.name"
+                           placeholder="Group name"
+                           ng-required="true"
+                           name="name"]
+       
+
+      label Select group members
+      .pull-right.st-select-all ng-if="!isEdit"
+          a ng-click="toggleAll()"
+            span ng-hide="group.users.length == contacts.length" Select all
+            span ng-show="group.users.length == contacts.length" Unselect all
+
+      .st-form-left-icon ng-if="contacts.length > 8"
+        i.glyphicon.glyphicon-search
+        input.form-control ng-model="searchUser" placeholder="Search"
+      
+      ul.st-users-list
+
+        li[ng-repeat="user in contacts | filter: searchUser | orderBy:'-name'"
+           ng-if="user.userId != movement.payerId"]
+       
+          .st-user-thumb.st-thumb user-avatar="" user="user"
+          .st-user-name
+            | {{getUserName(user.userId)}}
+          .st-controls
+              button.btn.btn.btn-default.btn-sm ng-click="toggleMember(user)" ng-hide="isMember(user)"
+                | Select
+              button.btn.btn.btn-success.btn-sm ng-click="toggleMember(user)" ng-show="isMember(user)" ng-disabled="isEdit && usersAdded.indexOf(user) == -1"
+                span Selected
+              / button.btn.btn.btn-success.btn-sm ng-disabled="isEdit && usersAdded.indexOf(user) == -1" ng-show="isMember(user)" ng-if="isEdit"
+                / | Selected
+
+      / .btn.btn-secundary ng-click="openNewContact()"
+      /   | New contact
+      /   i.fa.fa-plus
+      .checkbox
+        label
+          input[type="checkbox"
+                ng-model="group.newMovementNotification"
+                name="newMovementNotification"]
+          | Send a notification for every new movement to everyone involved.
+        
+  .modal-footer
+    .pull-left.st-users-info
+        |  {{(group.users.length)}} selected
+    button.btn.btn-primary.btn-small ng-click="save(group)" ng-if="!isEdit" Create group
+    button.btn.btn-primary.btn-small ng-click="save(group)" ng-if="isEdit" Update
+    button.btn.btn-default.btn-small ng-click="cancel()" Cancel

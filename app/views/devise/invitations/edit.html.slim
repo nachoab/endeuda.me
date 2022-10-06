@@ -1,0 +1,8 @@
+h2
+  = t 'devise.invitations.edit.header'
+
+.social
+  - User.omniauth_providers.each do |provider|
+  	div
+    	= link_to "Register using #{provider.to_s.titleize}", omniauth_authorize_path(:user, provider, :params => {:invitation_token => resource.invitation_token})
+

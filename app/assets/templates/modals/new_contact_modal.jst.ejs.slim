@@ -1,0 +1,46 @@
+.modal-content#st-new-contact-modal
+  .modal-header
+    h2.modal-title New contact
+
+  .modal-body.disable-select
+    .form-group
+      input.form-control ng-model="stForm.searchText" focus="true" placeholder="Email or name" 
+
+    .st-contacts-no-records ng-if="contactsLoading" Loading Google contacts ...
+
+    ul.st-users-list ng-if="allContacts"
+      // User not found: New email
+      li.moving-top-animation.st-new-email ng-show="(allContacts | filter:stForm.searchText).length == 0" 
+        div
+          .st-user-thumb.st-thumb
+            .glyphicon.glyphicon-question-sign
+          .st-user-name
+            | {{stForm.searchText}}
+            .st-user-name-subtitle ng-show="!(stForm.searchText | validEmail)" Complete email address to look up contact.
+            .st-user-name-subtitle ng-show="(stForm.searchText | validEmail)" Contact not found. Send him an invitation.
+          .st-controls
+            button.btn.btn.btn-default.btn-sm ng-show="stForm.searchText | validEmail" ng-click="sendInvitation(stForm.searchText)"
+              | Send invitation
+
+      li ng-repeat="user in allContacts" ng-show="([user] | filter:stForm.searchText).length > 0" 
+        // Registered user
+        div ng-if="user.email"
+          .st-user-thumb.st-thumb user-avatar="" user="user"
+          .st-user-name ng-bind-html="getUserName(user.userId) | highlight:stForm.searchText:caseSensitive"
+          .st-controls
+            button.btn.btn.btn-default.btn-sm ng-click="addContact({email: user.email})" ng-show="!isContact(user)"
+              | Add
+            button.btn.btn.btn-success.btn-sm ng-show="isContact(user)"
+              | Added
+        // Google user
+        div ng-if="user.address"
+          .st-user-thumb.st-thumb user-avatar="" user="user"
+          .st-user-name
+            span ng-bind-html="user.name | highlight:stForm.searchText:caseSensitive"
+            .st-user-name-subtitle ng-bind-html="user.address | highlight:stForm.searchText:caseSensitive"
+          .st-controls
+            button.btn.btn.btn-default.btn-sm ng-click="addContact({email: user.address})" ng-hide="false"
+              | Send invitation
+
+  .modal-footer
+    button.btn.btn-primary ng-click="cancel()" Close

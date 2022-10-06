@@ -1,0 +1,24 @@
+div ng-controller="facebookContactsController"
+  label Invita a participar en el viaje a través de Facebook
+
+  .loading ng-if="!facebookContacts" Cargando ...
+
+  input.form-control type="text" ng-model="filter.text" placeholder="Busca entre tus amigos por nombre" ng-if="facebookContacts"
+
+  ul.contact-list ng-if="facebookContacts"
+    li.moving-animation ng-repeat="contact in facebookContacts | orderBy:'name' | filter:filter.text | paged:(currentPage-1)*itemsPerPage:(currentPage)*itemsPerPage"
+      img ng-src="http://graph.facebook.com/{{contact.id}}/picture"
+      | {{ contact.name }}, 
+      a ng-show="!confirmFbInvitation" ng-click="confirmFbInvitation=!confirmFbInvitation" Enviar petición
+      .confirm ng-show="confirmFbInvitation"
+        | ¿Enviar invitación?
+        button.btn.btn-default ng-click="sendFbInvitation(contact)" Si, enviar
+        button.btn.btn-default ng-click="confirmFbInvitation=false" Cancelar
+
+  pagination.pagination-sm [total-items="(facebookContacts | filter:filter.text).length"
+                            page="currentPage"
+                            max-size="5"
+                            items-per-page="itemsPerPage"
+                            on-select-page="selectPage(page)"
+                            boundary-links="true"
+                            ng-show="facebookContacts"]

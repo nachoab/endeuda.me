@@ -1,0 +1,114 @@
+.modal-content#new-movement
+  .modal-header
+    button.close type="button" data-dismiss="modal" aria-hidden="true" ng-click="cancel()" &times;
+    h4.modal-title 
+      | {{ isEdit ? 'Editar' : 'Añadir' }} movimiento
+
+  .modal-body 
+    ol.breadcrumb
+      li.breadcrumb-animation.active ng-if="formState=='type'" Tipo de movimiento
+      li ng-if="movement.type=='expense'" 
+        a ng-click="goTo('type')" Gasto
+      li ng-if="movement.type=='transfer'" 
+        a ng-click="goTo('type')" Transferencia
+      
+      li.breadcrumb-animation.active ng-if="formState=='group'" Grupos
+      li ng-if="movement.groupId" 
+        a ng-click="goTo('group')" En {{ getGroup(movement.groupId).name }}
+
+      li.breadcrumb-animation.active ng-if="formState=='payer'" Quién paga
+      li ng-if="movement.payerId && movement.type=='expense'" 
+        a ng-click="goTo('payer')" Pagado por {{ getUserName(movement.payerId, true)}}
+      li ng-if="movement.payerId && movement.type=='transfer'" 
+        a ng-click="goTo('payer')" Transferido por {{ getUserName(movement.payerId, true)}}
+
+      li.breadcrumb-animation.active ng-if="formState=='shareholders' && movement.type=='expense'" Quiénes comparten
+      li.breadcrumb-animation.active ng-if="formState=='shareholders' && movement.type=='transfer'" Para quien
+      li ng-if="formState=='details' && movement.type=='expense'"
+        a ng-click="goTo('shareholders')" Compartido entre {{ movement.shareholders.length }}
+      li ng-if="formState=='details' && movement.type=='transfer'"
+        a ng-click="goTo('shareholders')" Para {{ getUserName(movement.shareholders[0].userId, true) }}
+
+      li.breadcrumb-animation.active ng-if="formState=='details'" Detalles
+
+
+
+    .forms-container
+      / errors
+      form role="form" name="form.newmovement" novalidate=""
+        .alert.alert-danger ng-if="movement.error == 'notinvolved' && movement.payerId"
+          | Debes participar en el movimiento. Solo puedes añadir gastos ajenos en los grupos. 
+
+
+        / MOVEMENT TYPE
+        .form-group.new-movement-states-animation.pull-left ng-show="formState=='type'" 
+          label Tipo de movimiento:
+          .btn.btn-default.expense ng-click="selectMovementType('expense')" Gasto
+          .btn.btn-default.transfer ng-click="selectMovementType('transfer')" Transferencia
+ 
+
+        / GROUP
+        .form-group.new-movement-states-animation.pull-left ng-if="formState=='group'" 
+          label ¿Es un gasto de grupo?
+          .btn.btn-default.expense ng-model="movement.type" value="expense" ng-click="selectMovementGroup(false)" No, gastos personales
+          .btn.btn-default ng-repeat="group in groups" ng-click="selectMovementGroup(group)" ng-class=""
+            | Grupo {{ group.name }}
+
+
+        / PAYER
+        .form-group.new-movement-states-animation.pull-left ng-if="formState=='payer'"
+          label ng-show="movement.type=='expense'" ¿Quién pagó?
+          label ng-show="movement.type=='transfer'" ¿Quién hizo la transferencia?
+          .btn.btn-default.expense ng-repeat="person in getPeople() " ng-click="selectMovementPayer(person)"
+            | {{ person.name }}
+          .btn.btn-secundary ng-click="openNewContact()"
+            | Añadir nuevo contacto
+            i.fa.fa-plus
+
+        
+        / SHAREHOLDERS
+        .form-group.new-movement-states-animation.pull-left ng-if="formState=='shareholders'" 
+          label ng-show="movement.type=='expense'" 
+            | ¿Para quienes?
+            div.checkall
+              .checkbox
+                input type="checkbox" ng-model="allSelected.shareholders" ng-change="toggleAllShareholders()"
+                | Todos mis contactos
+          label ng-show="movement.type=='transfer'" ¿A quién?
+
+          / Transfer => just one receiver
+          .receiver ng-if="movement.type=='transfer'"
+            .btn.btn-default ng-repeat="person in getPeople()" ng-click="toggleShareholder(person);selectMovementShareholders(movement.shareholders)" ng-class="{ active: isShareholder(person) }" ng-if="person.userId != movement.payerId"
+              | {{ person.name }}
+              i.fa.fa-check ng-if="isShareholder(person)"
+            .btn.btn-secundary ng-click="openNewContact()"
+              | Añadir nuevo contacto
+              i.fa.fa-plus
+
+          / Expense, multiple shareholders
+          .shareholder ng-if="movement.type=='expense'"
+            .btn.btn-default ng-repeat="person in getPeople()" ng-click="toggleShareholder(person)" ng-class="{ active: isShareholder(person) }"
+              | {{ person.name }}
+              i.fa.fa-check ng-if="isShareholder(person)"
+            .btn.btn-secundary ng-click="openNewContact()"
+              | Añadir nuevo contacto
+              i.fa.fa-plus
+
+            .btn.btn-primary.btn-small ng-if="movement.type=='expense'" ng-disabled="movement.shareholders.length==0" ng-click="selectMovementShareholders(movement.shareholders)" CONTINUAR
+
+
+        / DETAILS
+        .movement-info.new-movement-states-animation ng-if="formState=='details'" 
+          .form-group.amout-form-group 
+            label Título
+            input.form-control type="text" name="title" ng-model="movement.title" ng-required="true" select-me="true"
+
+          .form-group.amout-form-group
+            label ¿Qué cantidad?
+            div.input-group.col-md-4
+              input.form-control type="number" name="amount" ng-model="movement.amount" ng-required="true" ng-pattern="/\d+([\,\.]\d{1,2})?/" ng-maxlength="13"
+              span.input-group-addon €
+
+  .modal-footer
+    button.btn.btn-primary.btn-small ng-click="form.newmovement.$setDirty();save(movement)" ng-if="formState=='details'" AÑADIR MOVIMIENTO
+    button.btn.btn-default.btn-small ng-click="cancel()" CANCELAR

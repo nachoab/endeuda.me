@@ -1,0 +1,18 @@
+/**
+ * Adds an icon as placeholder on the left.
+ */
+.st-form-left-icon {
+  position: relative;
+}
+
+.st-form-left-icon input {
+  padding-left: 32px;
+}
+
+.st-form-left-icon i {
+  position: absolute;
+  padding: 10px 12px;
+  pointer-events: none;
+  font-size: 13px;
+  color: #777;
+}

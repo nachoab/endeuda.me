@@ -1,0 +1,148 @@
+#st-col-movements {
+  padding: 30px 20px;
+
+  @media (min-width: $screen-sm-min) {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+  }
+}
+
+.st-movements-filter {
+  float: right;
+  margin-top: -7px;
+
+  .st-filter-info {
+    border: 1px solid $bg-gray-dark;
+    font-size: 13px;
+    display: inline-block;
+    padding: 5px 10px;
+    line-height: 1.5;
+    margin-right: -1px;
+  }
+
+  .dropdown {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .dropdown-menu {
+    margin-top: -1px;
+    width: 280px;
+    padding: 15px 20px 25px 20px;
+    font-size: 13px;
+
+    .form-group:first-child {
+      margin-bottom: 9px;
+    }
+
+    label {
+      font-size: 13px;
+      margin-bottom: 9px;
+      font-weight: 400;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+#st-movements-months-blocks {
+  margin: 0 0 20px 0;
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+.st-movements-list {
+  margin-top: 15px;
+  background: white;
+  border: 1px solid lighten(#d8d8d8, 3%);
+  border-bottom-width: 2px;
+  border-top: 0;
+}
+
+.st-movements-list > li {
+  margin: 0;
+  padding: 10px 0;
+  cursor: default;
+  border-bottom: 1px solid $bg-gray-light;
+  position: relative;
+  //padding: 10px 30px 10px 10px;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  .st-user-movement {
+    position: relative;
+
+    .st-thumb {
+      position: absolute;
+    }
+    .st-money {
+      padding-left: 50px;
+      line-height: 18px;
+      .st-amount {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .st-description {
+    .st-title {
+      font-size: 16px;
+    }
+    .st-title-sm {
+      font-size: 11px;
+    }
+  }
+
+  .st-shared-by {
+    text-align: left;
+    padding-right: 55px;
+
+    .st-shared-by-thumbs > li {
+      display: inline-block;
+      vertical-align: top;
+      margin: 4px 2px 0 0;
+      >:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .st-movement-controls {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    cursor: pointer;
+    .st-destroy {
+      color: $gray-light;
+      &:hover {
+        color: $gray;
+      }
+    }
+  } 
+}
+
+@media (min-width: $screen-xs-min) and (max-width: $screen-md-max) {
+
+  .st-user-movement .st-money {
+    padding-left: 47px !important;
+  }
+  .st-user-movement {
+    padding-right: 0;
+  }
+  .st-user-movement .st-amount {
+    font-size: 15px !important;
+    letter-spacing: -1px; 
+  }
+}
+
+.st-no-movements-msg {
+  text-align: center;
+}

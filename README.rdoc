@@ -1,0 +1,6 @@
+== README
+
+endeuda.me was an app to share expenses with friends and family.
+
+Ruby on Rails 4
+Angular 1

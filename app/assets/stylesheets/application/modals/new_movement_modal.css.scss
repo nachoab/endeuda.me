@@ -1,0 +1,50 @@
+#new-movement {
+  .modal-body {
+    .form-group {
+      position: relative;
+      width: 100%;
+    }
+
+    .forms-container {
+      overflow: hidden;
+      position: relative;
+
+      // input[name="title"] {
+        // width: 50%;
+      // }
+
+      .checkall {
+        margin-left: 15px;
+      }
+
+      label {
+        margin-bottom: 10px;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 0 0 10px;
+
+        &:hover {
+          // background: #E98455;
+          // color:#FFF;
+        }
+
+        &.active {
+          background: #33b842;
+          border-color: #33b842;
+          color: #FFF;
+
+          &:hover {
+            background: #ba3737;
+            border-color: #ba3737;
+          }
+        }
+
+        .fa {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
